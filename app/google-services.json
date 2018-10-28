@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "588760764850",
+    "firebase_url": "https://nitchatzz.firebaseio.com",
+    "project_id": "nitchatzz",
+    "storage_bucket": "nitchatzz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:588760764850:android:438db5d3f62315f6",
+        "android_client_info": {
+          "package_name": "com.dc.chandra.nitchatzz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "588760764850-u6s8kh1q0579gpjc6lnb0r2aaqpl9u0m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqmFsdofz84HcFEhgllqiBadahGw0arKE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

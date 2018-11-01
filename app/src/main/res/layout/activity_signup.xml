@@ -24,7 +24,9 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="382dp"
+
+                android:layout_height="match_parent"
+
                 android:orientation="vertical">
 
                 <TextView
@@ -41,11 +43,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:orientation="vertical"
-                    android:paddingStart="50dp"
-                    android:paddingEnd="30dp">
+
+                    android:paddingEnd="30dp"
+                    android:paddingStart="50dp">
 
                     <Spinner
-                        android:id="@+id/spinner_signup"
+                        android:id="@+id/spinner2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:entries="@array/user_type2" />
@@ -56,8 +59,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="10dp"
-                    android:paddingStart="50dp"
-                    android:paddingEnd="30dp">
+
+                    android:paddingEnd="30dp"
+                    android:paddingStart="50dp">
+
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
@@ -69,9 +74,11 @@
                             android:id="@+id/et_phoneno"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+
+                            android:inputType="number"
                             android:background="@drawable/selector_bg_edit_2"
                             android:hint="@string/Phoneno"
-                            android:inputType="number"
+
                             android:paddingBottom="2dp"
                             android:textColor="#f0f7f4"
                             android:textCursorDrawable="@drawable/bg_input_cursor_2"
@@ -83,8 +90,10 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:paddingStart="50dp"
-                    android:paddingEnd="30dp">
+
+                    android:paddingEnd="30dp"
+                    android:paddingStart="50dp">
+
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
@@ -110,8 +119,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:orientation="horizontal"
-                    android:paddingStart="50dp"
-                    android:paddingEnd="30dp">
+
+                    android:paddingEnd="30dp"
+                    android:paddingStart="50dp">
+
 
                     <android.support.design.widget.TextInputLayout
 
@@ -121,11 +132,13 @@
                         android:theme="@style/TextLabel">
 
                         <EditText
-                            android:id="@+id/et_email"
+
+                            android:id="@+id/et_password"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/selector_bg_edit_2"
-                            android:hint="@string/Email"
+                            android:hint="@string/Password"
+
                             android:inputType="textPassword"
                             android:paddingBottom="10dp"
                             android:textColor="#f0f7f4"
@@ -138,8 +151,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:orientation="horizontal"
-                    android:paddingStart="50dp"
-                    android:paddingEnd="30dp">
+
+                    android:paddingEnd="30dp"
+                    android:paddingStart="50dp">
+
 
                     <android.support.design.widget.TextInputLayout
 
@@ -149,11 +164,13 @@
                         android:theme="@style/TextLabel">
 
                         <EditText
-                            android:id="@+id/et_password"
+
+                            android:id="@+id/et_repeatpassword"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/selector_bg_edit_2"
-                            android:hint="@string/Password"
+                            android:hint="@string/repeat_password"
+
                             android:inputType="textPassword"
                             android:paddingBottom="10dp"
                             android:textColor="#f0f7f4"
@@ -169,10 +186,12 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/bt_shape_2"
-                    android:onClick="clickRegister"
+
                     android:stateListAnimator="@drawable/state_list_animator_z"
                     android:text="@string/go"
-                    android:textColor="#2fa881" />
+                    android:textColor="#2fa881"
+                    android:onClick="clickRegister"/>
+
 
             </LinearLayout>
         </android.support.v7.widget.CardView>
@@ -188,16 +207,6 @@
             app:fabSize="normal" />
     </FrameLayout>
 
-    <TextView
-        android:id="@+id/tv_alreadysignup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="17dp"
-        android:layout_marginBottom="54dp"
-        android:text="already signed up?" />
 
 
 </RelativeLayout>

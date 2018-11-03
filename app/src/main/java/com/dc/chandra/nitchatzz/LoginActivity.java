@@ -26,6 +26,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+
 public class LoginActivity extends AppCompatActivity {
 
     EditText email, password ;
@@ -40,32 +42,32 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
 
     ///google sigin
-                            public static final String TAG = "LoginActivity";
-                            public static final int RequestSignInCode = 7;
-                            //public GoogleApiClient googleApiClient;
-                            //com.google.android.gms.common.SignInButton googlesignInBtn;
-                            TextView LoginUserName, LoginUserEmail;
+    public static final String TAG = "LoginActivity";
+    public static final int RequestSignInCode = 7;
+    //public GoogleApiClient googleApiClient;
+    //com.google.android.gms.common.SignInButton googlesignInBtn;
+    TextView LoginUserName, LoginUserEmail;
 
 
 
-                            @Override
-                            protected void onCreate(Bundle savedInstanceState) {
-                                super.onCreate(savedInstanceState);
-                                setContentView(R.layout.activity_login);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
 
-                                email=(EditText)findViewById(R.id.et_Email_login);
-                                password=(EditText)findViewById(R.id.et_password);
+        email=(EditText)findViewById(R.id.et_Email_login);
+        password=(EditText)findViewById(R.id.et_password);
 
-                                Login=(Button)findViewById(R.id.bt_go);
-                                ForgotPassword=(TextView) findViewById(R.id.ForgotPasswordBtn);
+        Login=(Button)findViewById(R.id.bt_go);
+        ForgotPassword=(TextView) findViewById(R.id.ForgotPasswordBtn);
 
-                                //googlesignInBtn=(SignInButton) findViewById(R.id.googleSignInBtn);
+        //googlesignInBtn=(SignInButton) findViewById(R.id.googleSignInBtn);
 
-                                progressDialog=new ProgressDialog(LoginActivity.this);
+        progressDialog=new ProgressDialog(LoginActivity.this);
 
-                                firebaseAuth=FirebaseAuth.getInstance();
+        firebaseAuth=FirebaseAuth.getInstance();
 
-                                // Creating and Configuring Google Sign In object.
+        // Creating and Configuring Google Sign In object.
         /*GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -76,23 +78,23 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
         */
 
-                                if(firebaseAuth.getCurrentUser()!=null){
-                                    Loginexist();
-                                }
+        if(firebaseAuth.getCurrentUser()!=null){
+            Loginexist();
+        }
 
 
-                                Login.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        if(Validate())
-                                        {
-                                            LoginFunction();
-                                        }
-                                        else {
-                                            Toast.makeText(LoginActivity.this, "Please Fill All the Fields", Toast.LENGTH_LONG).show();
-                                        }
-                                    }
-                                });
+        Login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(Validate())
+                {
+                    LoginFunction();
+                }
+                else {
+                    Toast.makeText(LoginActivity.this, "Please Fill All the Fields", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
         /*googlesignInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,26 +104,26 @@ public class LoginActivity extends AppCompatActivity {
         });
         */
 
-                                ForgotPassword.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        EmailHolder = email.getText().toString().trim();
-                                        if(TextUtils.isEmpty(EmailHolder)||!android.util.Patterns.EMAIL_ADDRESS.matcher(EmailHolder).matches() ){
-                                            Toast.makeText(LoginActivity.this, "Enter a valid Email", Toast.LENGTH_LONG).show();
-                                        }
-                                        else {
-                                            //finish();
-                                            progressDialog.setMessage("Please Wait");
-                                            progressDialog.show();
-                                            send_email();
-                                            progressDialog.dismiss();
-                                            Toast.makeText(LoginActivity.this, "Reset Link sent to your Mail", Toast.LENGTH_LONG).show();
-                                        }
-                                    }
-                                });
+        ForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EmailHolder = email.getText().toString().trim();
+                if(TextUtils.isEmpty(EmailHolder)||!android.util.Patterns.EMAIL_ADDRESS.matcher(EmailHolder).matches() ){
+                    Toast.makeText(LoginActivity.this, "Enter a valid Email", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    //finish();
+                    progressDialog.setMessage("Please Wait");
+                    progressDialog.show();
+                    send_email();
+                    progressDialog.dismiss();
+                    Toast.makeText(LoginActivity.this, "Reset Link sent to your Mail", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
 
-                            }
+    }
 
     /*@Override
     protected void onStart() {
@@ -136,110 +138,111 @@ public class LoginActivity extends AppCompatActivity {
     }
     */
 
-                            public boolean Validate(){
-                                EmailHolder = email.getText().toString().trim();
-                                PasswordHolder = password.getText().toString().trim();
+    public boolean Validate(){
+        EmailHolder = email.getText().toString().trim();
+        PasswordHolder = password.getText().toString().trim();
 
-                                if(TextUtils.isEmpty(EmailHolder)||!android.util.Patterns.EMAIL_ADDRESS.matcher(EmailHolder).matches() ){
-                                    Toast.makeText(LoginActivity.this, "Enter a valid Email", Toast.LENGTH_LONG).show();
-                                    return false;
-                                }
-                                if(TextUtils.isEmpty(PasswordHolder)){
-                                    Toast.makeText(LoginActivity.this, "Enter a valid Password", Toast.LENGTH_LONG).show();
-                                    return false;
-                                }
+        if(TextUtils.isEmpty(EmailHolder)||!android.util.Patterns.EMAIL_ADDRESS.matcher(EmailHolder).matches() ){
+            Toast.makeText(LoginActivity.this, "Enter a valid Email", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if(TextUtils.isEmpty(PasswordHolder)){
+            Toast.makeText(LoginActivity.this, "Enter a valid Password", Toast.LENGTH_LONG).show();
+            return false;
+        }
 
 
-                                return true ;
-                            }
+        return true ;
+    }
 
-                            public void LoginFunction(){
+    public void LoginFunction(){
 
-                                progressDialog.setMessage("Please Wait");
-                                progressDialog.show();
-                                progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Please Wait");
+        progressDialog.show();
+        progressDialog.setCanceledOnTouchOutside(false);
 
-                                Log.d(TAG, "signIn:" + email);
+        Log.d(TAG, "signIn:" + EmailHolder);
+        Log.d(TAG, "signIn:" + firebaseAuth);
 
-                                // Calling  signInWithEmailAndPassword function with firebase object and passing EmailHolder and PasswordHolder inside it.
-                                firebaseAuth.signInWithEmailAndPassword(EmailHolder, PasswordHolder)
-                                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        // Calling  signInWithEmailAndPassword function with firebase object and passing EmailHolder and PasswordHolder inside it.
+        firebaseAuth.signInWithEmailAndPassword(EmailHolder, PasswordHolder)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        // If task done Successful.
+                        if(task.isSuccessful()){
+
+                            // Closing the current Login Activity.
+                            FirebaseUser user = firebaseAuth.getCurrentUser();
+                            DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+                            //DatabaseReference db = firebase.database.getInstance().getReference();
+                            final Query FaRef = db.child("fa").orderByChild("email").equalTo(user.getEmail());
+                            final Query ParRef = db.child("parent").orderByChild("email").equalTo(user.getEmail());
+
+
+                            Log.d(TAG, "signInWithEmail:success");
+                            final String email = user.getEmail();
+                            Log.d(TAG, "Email :" + email);
+                            Log.d(TAG, "faref :" + FaRef);
+
+                            ParRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    Log.d(TAG, "chandraEmail :" + email);
+                                    if (dataSnapshot.hasChildren()) {
+                                        Log.d(TAG, "parent exist");
+                                        ParExist();
+                                        progressDialog.dismiss();
+                                    } else {
+                                        Log.d(TAG, "parent does not exist");
+
+                                        FaRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
-                                            public void onComplete(@NonNull Task<AuthResult> task) {
-
-                                                // If task done Successful.
-                                                if(task.isSuccessful()){
-
-                                                    // Closing the current Login Activity.
-                                                    FirebaseUser user = firebaseAuth.getCurrentUser();
-                                                    DatabaseReference db = FirebaseDatabase.getInstance().getReference();
-                                                    //DatabaseReference db = firebase.database.getInstance().getReference();
-                                                    final Query FaRef = db.child("fa").orderByChild("email").equalTo(user.getEmail());
-                                                    final Query ParRef = db.child("parent").orderByChild("email").equalTo(user.getEmail());
-
-
-                                                    Log.d(TAG, "signInWithEmail:success");
-                                                    final String email = user.getEmail();
-                                                    Log.d(TAG, "Email :" + email);
-                                                    Log.d(TAG, "faref :" + FaRef);
-
-                                                    ParRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                                                        @Override
-                                                        public void onDataChange(DataSnapshot dataSnapshot) {
-                                                            Log.d(TAG, "chandraEmail :" + email);
-                                                            if (dataSnapshot.hasChildren()) {
-                                                                Log.d(TAG, "parent exist");
-                                                                ParExist();
-                                                                progressDialog.dismiss();
-                                                            } else {
-                                                                Log.d(TAG, "parent does not exist");
-
-                                                                FaRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                                                                    @Override
-                                                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                                                        if (dataSnapshot.hasChildren()) {
-                                                                            Log.d(TAG, "fa exist");
-                                                                            faExist();
-                                                                            progressDialog.dismiss();
-                                                                        } else {
-                                                                            Log.d(TAG, "Faculty does not exist");
-                                                                            firebaseAuth.signOut();
-                                                                            Toast.makeText(LoginActivity.this, "No user available with entered details", Toast.LENGTH_LONG).show();
-                                                                        }
-                                                                    }
-                                                                    @Override
-                                                                    public void onCancelled(DatabaseError databaseError) {
-                                                                        Log.d(TAG, "In onCancelled Faculty");
-                                                                    }
-                                                                });
-
-
-                                                                //Toast.makeText(LoginActivity.this, "No user available with entered details", Toast.LENGTH_LONG).show();
-
-
-
-                                                            }
-                                                        }
-                                                        @Override
-                                                        public void onCancelled(DatabaseError databaseError) {
-                                                            Log.d(TAG, "In onCancelled parent");
-                                                        }
-                                                    });
-                                                    //Toast.makeText(LoginActivity.this, "No user available with entered details", Toast.LENGTH_LONG).show();
-
-
-                                                }
-                                                else {
-                                                    // Hiding the progress dialog.
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                if (dataSnapshot.hasChildren()) {
+                                                    Log.d(TAG, "fa exist");
+                                                    faExist();
                                                     progressDialog.dismiss();
-                                                    Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                                    // Showing toast message when email or password not found in Firebase Online database.
-                                                    Toast.makeText(LoginActivity.this, "Email or Password Not found, Please Try Again", Toast.LENGTH_LONG).show();
+                                                } else {
+                                                    Log.d(TAG, "Faculty does not exist");
+                                                    firebaseAuth.signOut();
+                                                    Toast.makeText(LoginActivity.this, "No user available with entered details", Toast.LENGTH_LONG).show();
                                                 }
+                                            }
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+                                                Log.d(TAG, "In onCancelled Faculty");
                                             }
                                         });
 
-                            }
+
+                                        //Toast.makeText(LoginActivity.this, "No user available with entered details", Toast.LENGTH_LONG).show();
+
+
+
+                                    }
+                                }
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                    Log.d(TAG, "In onCancelled parent");
+                                }
+                            });
+                            //Toast.makeText(LoginActivity.this, "No user available with entered details", Toast.LENGTH_LONG).show();
+
+
+                        }
+                        else {
+                            // Hiding the progress dialog.
+                            progressDialog.dismiss();
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            // Showing toast message when email or password not found in Firebase Online database.
+                            Toast.makeText(LoginActivity.this, "Email or Password Not found, Please Try Again", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+
+    }
 
 
     public void Loginexist(){
@@ -249,6 +252,7 @@ public class LoginActivity extends AppCompatActivity {
         DatabaseReference FaRef = db.child("fa");
         DatabaseReference ParRef = db.child("parent");
         final String uid = user.getUid();
+        StaticConfig.UID = user.getUid();
         ParRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -294,6 +298,7 @@ public class LoginActivity extends AppCompatActivity {
     public void ParExist(){
         Log.d(TAG, "In parent Exists");
         Log.d(TAG, "Start parent Intent");
+        //saveUserInfo();
         finish();
         Intent intent = new Intent(LoginActivity.this, ParentActivity.class);
         startActivity(intent);
@@ -302,12 +307,34 @@ public class LoginActivity extends AppCompatActivity {
 
     public void faExist(){
         Log.d(TAG, "Start fa Exists");
+        //saveUserInfo();
         Log.d(TAG, "Start fa Intent");
         finish();
-        Intent intent = new Intent(LoginActivity.this, FaActivity.class);
+        Intent intent = new Intent(LoginActivity.this,  MainActivity.class);
         startActivity(intent);
 
 
+    }
+
+    void saveUserInfo() {
+        FirebaseDatabase.getInstance().getReference().child("faculty/" + StaticConfig.UID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //waitingDialog.dismiss();
+                HashMap hashUser = (HashMap) dataSnapshot.getValue();
+                Faculty userInfo = new Faculty();
+                userInfo.name = (String) hashUser.get("name");
+                Log.d(TAG, "Start fa Intent"+userInfo.name);
+                userInfo.email = (String) hashUser.get("email");
+                userInfo.avata = (String) hashUser.get("avata");
+                SharedPreferenceHelper.getInstance(LoginActivity.this).savefacultyInfo(userInfo);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
 

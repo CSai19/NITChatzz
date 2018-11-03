@@ -4,5 +4,9 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
+    <color name="grey_200">#EEEEEE</color>
     <color name="grey_800">#212121</color>
+    <color name="colorCardView">#f7f7f7</color>
+    <color name="colorIndivateTab">#FFFFFF</color>
+    <color name="grey_100">#F5F5F5</color>
 </resources>

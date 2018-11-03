@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dc.chandra.nitchatzz">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,9 +14,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".LoginActivity">
+        <activity android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".LoginActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/TranslucentBackground">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,6 +35,20 @@
         <activity android:name=".FaActivity" />
         <activity android:name=".ParentActivity" />
 
+        <activity
+            android:name="com.dc.chandra.nitchatzz.ChatActivity"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.dc.chandra.nitchatzz.MainActivity"/>
+
+        <service android:name="com.dc.chandra.nitchatzz.FriendChatService"
+            android:exported="false"
+            android:persistent= "true" />
+
     </application>
 
 </manifest>
+
+
+
+
+

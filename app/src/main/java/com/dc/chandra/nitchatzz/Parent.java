@@ -5,12 +5,13 @@ public class Parent {
     public String email;
     public String phone;
     public String stud_name;
-    //public String avata;
+    public String avata;
+    public String fa;
     public Status status;
     public Message message;
 
 
-    public Faculty(){
+    public Parent(){
         status = new Status();
         message = new Message();
         status.isOnline = false;

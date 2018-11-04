@@ -713,6 +713,7 @@ class ListFriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                                         Intent intentDeleted = new Intent(FriendsFragment.ACTION_DELETE_FRIEND);
                                         intentDeleted.putExtra("idFriend", idFriend);
                                         context.sendBroadcast(intentDeleted);
+                                        FirebaseDatabase.getInstance().getReference().child("parent/" + idFriend).child("fa").setValue("");
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {

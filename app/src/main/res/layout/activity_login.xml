@@ -6,7 +6,7 @@
     <android.support.v7.widget.CardView
         android:id="@+id/cv"
         android:layout_width="300dp"
-        android:layout_height="330dp"
+        android:layout_height="300dp"
         android:layout_centerInParent="true"
         app:cardCornerRadius="6dp"
         app:cardElevation="3dp"
@@ -81,18 +81,6 @@
                         android:textSize="13sp" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:orientation="vertical"
-                android:paddingEnd="30dp"
-                android:paddingStart="50dp">
-                <Spinner
-                    android:id="@+id/spinner1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/user_type" />
-            </LinearLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
@@ -120,16 +108,5 @@
                 android:textSize="12sp" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@id/cv"
-        android:layout_alignTop="@id/cv"
-        android:layout_marginEnd="-20dp"
-        android:layout_marginTop="25dp"
-        android:onClick="clickRegisterLayout"
-        android:src="@drawable/ic_signup"
-        android:transitionName="loginFab"
-        app:fabSize="normal" />
+
 </RelativeLayout>

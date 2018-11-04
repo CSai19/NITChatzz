@@ -20,18 +20,12 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.dc.chandra.nitchatzz.StaticConfig;
-import com.dc.chandra.nitchatzz.ServiceUtils;
-import com.dc.chandra.nitchatzz.FriendsFragment;
-//import com.android.rivchat.ui.GroupFragment;
-import com.dc.chandra.nitchatzz.LoginActivity;
-import com.dc.chandra.nitchatzz.FAProfileFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private static String TAG = "MainActivity";
+    public static String TAG = "MainActivity";
     private ViewPager viewPager;
     private TabLayout tabLayout = null;
     public static String STR_FRIEND_FRAGMENT = "FRIEND";

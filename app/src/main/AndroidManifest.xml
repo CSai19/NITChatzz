@@ -33,7 +33,12 @@
         </activity>
 
         <activity android:name=".FaActivity" />
-        <activity android:name=".ParentActivity" />
+
+        <activity android:name=".ParentActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name="com.dc.chandra.nitchatzz.ChatActivity"

@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,17 +24,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.dc.chandra.nitchatzz.R;
-import com.dc.chandra.nitchatzz.SharedPreferenceHelper;
-import com.dc.chandra.nitchatzz.StaticConfig;
-import com.dc.chandra.nitchatzz.Conversation;
-import com.dc.chandra.nitchatzz.Message;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
 
 public class ChatActivity extends AppCompatActivity implements View.OnClickListener {
     private RecyclerView recyclerChat;
@@ -48,7 +43,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayoutManager linearLayoutManager;
     public static HashMap<String, Bitmap> bitmapAvataFriend;
     public Bitmap bitmapAvataUser;
-
+    public static String TAG = "ChatActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +51,11 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_chat);
         Intent intentData = getIntent();
         idFriend = intentData.getCharSequenceArrayListExtra(StaticConfig.INTENT_KEY_CHAT_ID);
+        Log.d(TAG, "insideonCreate" + idFriend);
         roomId = intentData.getStringExtra(StaticConfig.INTENT_KEY_CHAT_ROOM_ID);
+        Log.d(TAG, "insideonCreate" + roomId);
         String nameFriend = intentData.getStringExtra(StaticConfig.INTENT_KEY_CHAT_FRIEND);
+        Log.d(TAG, "insideonCreate" + nameFriend);
 
         conversation = new Conversation();
         btnSend = (ImageButton) findViewById(R.id.btnSend);

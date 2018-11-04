@@ -43,13 +43,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class FAProfileFragment extends Fragment {
-    TextView tvFacultyName;
+public class ParentProfileFragment extends Fragment {
+    TextView tvParentName;
     ImageView avatar;
 
     private List<Configuration> listConfig = new ArrayList<>();
     private RecyclerView recyclerView;
-    private FacultyInfoAdapter infoAdapter;
+    private ParentInfoAdapter infoAdapter;
 
     private static final String USERNAME_LABEL = "Username";
     private static final String EMAIL_LABEL = "Email";
@@ -61,10 +61,10 @@ public class FAProfileFragment extends Fragment {
 
     private DatabaseReference userDB;
     private FirebaseAuth mAuth;
-    private Faculty myAccount;
+    private Parent myAccount;
     private Context context;
 
-    public FAProfileFragment() {
+    public ParentProfileFragment() {
         // Required empty public constructor
     }
 
@@ -78,20 +78,20 @@ public class FAProfileFragment extends Fragment {
         public void onDataChange(DataSnapshot dataSnapshot) {
             //Lấy thông tin của user về và cập nhật lên giao diện
             listConfig.clear();
-            myAccount = dataSnapshot.getValue(Faculty.class);
+            myAccount = dataSnapshot.getValue(Parent.class);
 
             setupArrayListInfo(myAccount);
             if(infoAdapter != null){
                 infoAdapter.notifyDataSetChanged();
             }
 
-            if(tvFacultyName != null){
-                tvFacultyName.setText(myAccount.name);
+            if(tvParentName != null){
+                tvParentName.setText(myAccount.name);
             }
 
             setImageAvatar(context, myAccount.avata);
-            SharedPreferenceHelper preferenceHelper = SharedPreferenceHelper.getInstance(context);
-            preferenceHelper.savefacultyInfo(myAccount);
+            ParentPreferenceHelper preferenceHelper = ParentPreferenceHelper.getInstance(context);
+            preferenceHelper.saveparentInfo(myAccount);
         }
 
         @Override
@@ -104,7 +104,7 @@ public class FAProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        userDB = FirebaseDatabase.getInstance().getReference().child("fa").child(StaticConfig.UID);
+        userDB = FirebaseDatabase.getInstance().getReference().child("parent").child(StaticConfig.UID);
         userDB.addListenerForSingleValueEvent(userListener);
         mAuth = FirebaseAuth.getInstance();
 
@@ -113,16 +113,16 @@ public class FAProfileFragment extends Fragment {
         context = view.getContext();
         avatar = (ImageView) view.findViewById(R.id.img_avatar);
         avatar.setOnClickListener(onAvatarClick);
-        tvFacultyName = (TextView)view.findViewById(R.id.tv_username);
+        tvParentName = (TextView)view.findViewById(R.id.tv_username);
 
-        SharedPreferenceHelper prefHelper = SharedPreferenceHelper.getInstance(context);
-        myAccount = prefHelper.getfacultyInfo();
+        ParentPreferenceHelper prefHelper = ParentPreferenceHelper.getInstance(context);
+        myAccount = prefHelper.getparentInfo();
         setupArrayListInfo(myAccount);
         setImageAvatar(context, myAccount.avata);
-        tvFacultyName.setText(myAccount.name);
+        tvParentName.setText(myAccount.name);
 
         recyclerView = (RecyclerView)view.findViewById(R.id.info_recycler_view);
-        infoAdapter = new FacultyInfoAdapter(listConfig);
+        infoAdapter = new ParentInfoAdapter(listConfig);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -194,8 +194,8 @@ public class FAProfileFragment extends Fragment {
                                 if(task.isSuccessful()){
 
                                     waitingDialog.dismiss();
-                                    SharedPreferenceHelper preferenceHelper = SharedPreferenceHelper.getInstance(context);
-                                    preferenceHelper.savefacultyInfo(myAccount);
+                                    ParentPreferenceHelper preferenceHelper = ParentPreferenceHelper.getInstance(context);
+                                    preferenceHelper.saveparentInfo(myAccount);
                                     avatar.setImageDrawable(ImageUtils.roundedImage(context, liteImage));
 
                                     new LovelyInfoDialog(context)
@@ -228,7 +228,7 @@ public class FAProfileFragment extends Fragment {
      * Xóa list cũ và cập nhật lại list data mới
      * @param myAccount
      */
-    public void setupArrayListInfo(Faculty myAccount){
+    public void setupArrayListInfo(Parent myAccount){
         listConfig.clear();
         Configuration userNameConfig = new Configuration(USERNAME_LABEL, myAccount.name, R.mipmap.ic_account_box);
         listConfig.add(userNameConfig);
@@ -270,10 +270,10 @@ public class FAProfileFragment extends Fragment {
         super.onDestroy();
     }
 
-    public class FacultyInfoAdapter extends RecyclerView.Adapter<FacultyInfoAdapter.ViewHolder>{
+    public class ParentInfoAdapter extends RecyclerView.Adapter<ParentInfoAdapter.ViewHolder>{
         private List<Configuration> profileConfig;
 
-        public FacultyInfoAdapter(List<Configuration> profileConfig){
+        public ParentInfoAdapter(List<Configuration> profileConfig){
             this.profileConfig = profileConfig;
         }
 
@@ -315,7 +315,7 @@ public class FAProfileFragment extends Fragment {
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         String newName = input.getText().toString();
                                         if(!myAccount.name.equals(newName)){
-                                            changeFacultyName(newName);
+                                            changeParentName(newName);
                                         }
                                         dialogInterface.dismiss();
                                     }
@@ -353,15 +353,15 @@ public class FAProfileFragment extends Fragment {
         /**
          * Cập nhật username mới vào SharedPreference và thay đổi trên giao diện
          */
-        private void changeFacultyName(String newName){
+        private void changeParentName(String newName){
             userDB.child("name").setValue(newName);
 
 
             myAccount.name = newName;
-            SharedPreferenceHelper prefHelper = SharedPreferenceHelper.getInstance(context);
-            prefHelper.savefacultyInfo(myAccount);
+            ParentPreferenceHelper prefHelper = ParentPreferenceHelper.getInstance(context);
+            prefHelper.saveparentInfo(myAccount);
 
-            tvFacultyName.setText(newName);
+            tvParentName.setText(newName);
             setupArrayListInfo(myAccount);
         }
 

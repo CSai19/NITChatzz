@@ -113,8 +113,8 @@ public class ServiceUtils {
         if(isNetworkConnected(context)) {
             String uid = SharedPreferenceHelper.getInstance(context).getUID();
             if (!uid.equals("")) {
-                FirebaseDatabase.getInstance().getReference().child("user/" + uid + "/status/isOnline").setValue(true);
-                FirebaseDatabase.getInstance().getReference().child("user/" + uid + "/status/timestamp").setValue(System.currentTimeMillis());
+                FirebaseDatabase.getInstance().getReference().child("fa/" + uid + "/status/isOnline").setValue(true);
+                FirebaseDatabase.getInstance().getReference().child("fa/" + uid + "/status/timestamp").setValue(System.currentTimeMillis());
             }
         }
     }
@@ -123,13 +123,13 @@ public class ServiceUtils {
         if(isNetworkConnected(context)) {
             for (Friend friend : listFriend.getListFriend()) {
                 final String fid = friend.id;
-                FirebaseDatabase.getInstance().getReference().child("user/" + fid + "/status").addListenerForSingleValueEvent(new ValueEventListener() {
+                FirebaseDatabase.getInstance().getReference().child("parent/" + fid + "/status").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if (dataSnapshot.getValue() != null) {
                             HashMap mapStatus = (HashMap) dataSnapshot.getValue();
                             if ((boolean) mapStatus.get("isOnline") && (System.currentTimeMillis() - (long) mapStatus.get("timestamp")) > StaticConfig.TIME_TO_OFFLINE) {
-                                FirebaseDatabase.getInstance().getReference().child("user/" + fid + "/status/isOnline").setValue(false);
+                                FirebaseDatabase.getInstance().getReference().child("parent/" + fid + "/status/isOnline").setValue(false);
                             }
                         }
                     }

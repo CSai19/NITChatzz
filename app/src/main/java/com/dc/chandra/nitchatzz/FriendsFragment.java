@@ -132,6 +132,7 @@ public class FriendsFragment extends Fragment implements SwipeRefreshLayout.OnRe
                     if(idDeleted.equals(friend.id)){
                         ArrayList<Friend> friends = dataListFriend.getListFriend();
                         friends.remove(friend);
+                        listFriendID.remove(idDeleted);
                         break;
                     }
                 }
@@ -682,6 +683,49 @@ class ListFriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
      */
     private void deleteFriend(final String idFriend) {
         if (idFriend != null) {
+            FirebaseDatabase.getInstance().getReference().child("friend").child(idFriend)
+                    .orderByValue().equalTo(StaticConfig.UID).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    if (dataSnapshot.getValue() == null) {
+                        //email not found
+                        dialogWaitDeleting.dismiss();
+                        new LovelyInfoDialog(context)
+                                .setTopColorRes(R.color.colorAccent)
+                                .setTitle("Error")
+                                .setMessage("Error occurred during deleting parent")
+                                .show();
+                    } else {
+                        String idRemoval = ((HashMap) dataSnapshot.getValue()).keySet().iterator().next().toString();
+                        FirebaseDatabase.getInstance().getReference().child("friend")
+                                .child(idFriend).child(idRemoval).removeValue()
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        dialogWaitDeleting.dismiss();
+
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        dialogWaitDeleting.dismiss();
+                                        new LovelyInfoDialog(context)
+                                                .setTopColorRes(R.color.colorAccent)
+                                                .setTitle("Error")
+                                                .setMessage("Error occurred during deleting parent")
+                                                .show();
+                                    }
+                                });
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
             FirebaseDatabase.getInstance().getReference().child("friend").child(StaticConfig.UID)
                     .orderByValue().equalTo(idFriend).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -707,7 +751,7 @@ class ListFriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                                         new LovelyInfoDialog(context)
                                                 .setTopColorRes(R.color.colorAccent)
                                                 .setTitle("Success")
-                                                .setMessage("parent deleting successfully")
+                                                .setMessage("parent deleted successfully")
                                                 .show();
 
                                         Intent intentDeleted = new Intent(FriendsFragment.ACTION_DELETE_FRIEND);
